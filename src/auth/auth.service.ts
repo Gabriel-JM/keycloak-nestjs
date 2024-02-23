@@ -175,11 +175,12 @@ export class AuthService {
   }
 
   async verify(token: string) {
-    const params = new URLSearchParams()
-    params.set('token', token)
-    params.set('client_id', 'admin-cli')
-    params.set('client_secret', this.clientSecret)
-
+    const params = new URLSearchParams({
+      token,
+      client_id: 'admin-cli',
+      client_secret: this.clientSecret
+    })
+    
     const response = await fetch(
       `${host}/realms/myrealm/protocol/openid-connect/token/introspect`,
       {
@@ -197,11 +198,12 @@ export class AuthService {
   }
 
   private async adminAccess() {
-    const params = new URLSearchParams()
-    params.set('username', 'admin')
-    params.set('password', 'admin')
-    params.set('grant_type', 'password')
-    params.set('client_id', 'admin-cli')
+    const params = new URLSearchParams({
+      username: 'admin',
+      password: 'admin',
+      grant_type: 'password',
+      client_id: 'admin-cli'
+    })
 
     const adminResponse = await fetch(
       `${host}/realms/master/protocol/openid-connect/token`,
